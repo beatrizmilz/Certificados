@@ -6,9 +6,9 @@ date: ''
 params:
   nome_participante: "Nome nome nome "
   tipo_participacao: "participante"
-  nome_meetup: "Curso Básico de R"
-  duracao: "8 horas"
-  realizado_em: " 08 de fevereiro de 2020 em São Paulo - SP"
+  nome_meetup: "Meetup: do SQL para o R em minutos"
+  duracao: "3 horas"
+  realizado_em: " 16 de maio de 2020 - Online"
 output:
   xaringan::moon_reader:
     lib_dir: libs
