@@ -27,7 +27,8 @@ library(readr)
     ),
     trim_ws = TRUE
   ) %>% janitor::clean_names() %>%
-     filter(presenca == TRUE)
+     filter(presenca == TRUE)  %>%
+    filter(correcao == TRUE)
 
 
 # Organizadoras --------------------------------------
@@ -81,15 +82,34 @@ purrr::walk(
   ~ rmarkdown::render(
     "certificados/modelo_certificados.Rmd",
     params = list(nome_participante = .),
-    output_file = glue::glue('Certificado_R-Ladies_{.}.html')
+    output_file = glue::glue('Certificado_Participante_R-Ladies_{.}.html')
   )
 )
 
+# Palestrantes  --------------------------------------
+# Palestrantes - ler arquivo
+
+vetor_palestrantes <- c("Maria Marinho dos Santos", 'Adriana Letícia dos Reis')
+
+
+# Gerar arquivos html das Palestrantes
+
+purrr::walk(
+  vetor_palestrantes,
+  ~ rmarkdown::render(
+    "certificados/modelo_certificados.Rmd",
+    params = list(nome_participante = ., tipo_participacao = "palestrante"),
+    output_file = glue::glue('Certificado_Palestrante_R-Ladies_{.}.html')
+  )
+)
+
+#
 # -------------------
 # Gerar os PDF's de todos os HTML na pasta
 purrr::walk(.x = list.files(pattern = "\\.html$", recursive = TRUE),
             .f = pagedown::chrome_print)
 
+pagedown::chrome_print("certificados/Certificado_Palestrante_R-Ladies_Maria Marinho dos Santos.html")
 
 beepr::beep() # a etapa de gerar os PDFs demora.
 # A função beep faz um aviso sonoro para saber que terminou!
